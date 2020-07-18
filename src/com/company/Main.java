@@ -6,13 +6,10 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        int principal = 0;
-        float yearlyRate = 0;
-        byte periodYears = 0;
 
-        principal = (int)readNumber("Enter Principal ($1k - $1m): ", 1_000, 1_000_000);
-        yearlyRate = (float) readNumber("Annual Interest rate: ", 0, 30);
-        periodYears = (byte) readNumber("Enter Period (Years): ", 0, 30);
+        int principal = (int)readNumber("Enter Principal ($1k - $1m): ", 1_000, 1_000_000);
+        float yearlyRate = (float) readNumber("Annual Interest rate: ", 0, 30);
+        byte periodYears = (byte) readNumber("Enter Period (Years): ", 0, 30);
 
         double mortgage = calculateMortgage(principal, yearlyRate, periodYears);
         String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);

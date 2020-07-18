@@ -14,7 +14,13 @@ public class Main {
         double mortgage = calculateMortgage(principal, yearlyRate, periodYears);
         String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
 
-        System.out.println("Mortgage: " + mortgageFormatted);
+        System.out.println("MORTGAGE");
+        System.out.println("---------");
+
+        System.out.println("Monthly Payment: " + mortgageFormatted);
+
+        //B = L[(1 + c)n - (1 + c)p]/[(1 + c)n - 1]
+        calculateLoanBalance(principal, periodYears, yearlyRate);
     }
 
     public static double readNumber(String prompt, double min, double max){
@@ -39,5 +45,28 @@ public class Main {
 
         double mortgage = principal * ((rate * Math.pow((1 + rate), numberOfPayments)) / (Math.pow((1 + rate), numberOfPayments) - 1));
         return mortgage;
+    }
+
+    public static void calculateLoanBalance(int principal, byte periodYears, float yearlyRate){
+        final byte MONTHS_IN_YEAR = 12;
+        final byte PERCENTAGE = 100;
+
+        int numberOfMonths = periodYears * MONTHS_IN_YEAR;
+        float rate = (yearlyRate / PERCENTAGE) / MONTHS_IN_YEAR;
+
+        int count = 0;
+
+        System.out.println("PAYMENT SCHEDULE");
+        System.out.println("----------------");
+
+        while (true){
+            count++;
+            double balance = (principal*(Math.pow((1+rate), numberOfMonths) - Math.pow((1+rate), count))) / (Math.pow((1+rate), numberOfMonths) - 1);
+            String balanceFormatted = NumberFormat.getCurrencyInstance().format(balance);
+            System.out.println(balanceFormatted);
+            if (count == numberOfMonths)
+                break;
+        }
+
     }
 }

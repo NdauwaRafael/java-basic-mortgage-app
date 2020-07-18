@@ -10,41 +10,27 @@ public class Main {
         float yearlyRate = 0;
         byte periodYears = 0;
 
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.print("Enter Principal ($1k - $1m): ");
-            principal = scanner.nextInt();
-            if (principal >= 1_000 && principal <= 1_000_000)
-                break;
-            System.out.println("Enter amount between 1,000 and 1,000, 000");
-        }
-
-        while (true) {
-            System.out.print("Annual Interest rate: ");
-            yearlyRate = scanner.nextFloat();
-
-            if (yearlyRate > 0 && yearlyRate <= 30)
-                break;
-
-            System.out.println("Enter value between 0 and 30.");
-        }
-
-        while (true) {
-            System.out.print("Enter Period (Years): ");
-            periodYears = scanner.nextByte();
-
-            if (periodYears > 0 && periodYears <= 30)
-                break;
-
-            System.out.println("Enter value between 0 and 30.");
-
-        }
+        principal = (int)readNumber("Enter Principal ($1k - $1m): ", 1_000, 1_000_000);
+        yearlyRate = (float) readNumber("Annual Interest rate: ", 0, 30);
+        periodYears = (byte) readNumber("Enter Period (Years): ", 0, 30);
 
         double mortgage = calculateMortgage(principal, yearlyRate, periodYears);
         String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
 
         System.out.println("Mortgage: " + mortgageFormatted);
+    }
+
+    public static double readNumber(String prompt, double min, double max){
+        Scanner scanner = new Scanner(System.in);
+        double value;
+        while (true) {
+            System.out.print(prompt);
+            value = scanner.nextInt();
+            if (value >= min && value <= max)
+                break;
+            System.out.println("Enter amount between " + min + " and " + max);
+        }
+        return value;
     }
 
     public static double calculateMortgage(int principal, float yearlyRate, byte periodYears) {
